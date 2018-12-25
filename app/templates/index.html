@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    {% if title %}
+    <title>pathwaze - {{ title }}</title>
+    {% else %}
+    <title>pathwaze - {{ title }}</title>
+    {% endif %}
+</head>
+<body>
+    <h1>PathWaze</h1>
+    {{ pathway.title }}
+    <p>{{ pathway.description }}</p>
+    <table>
+        <tr>
+            <th>Skill</th>
+            <th>Action</th>
+        </tr>
+
+    {% for question in pathway.skills %}
+        <tr>
+            <td><b>{{ question.title }}</b><br />{{ question.description }}</td>
+            <td><a href="/removeskillfrompathway/{{ question.id }}/{{ pathway.id }}">remove</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <hr />
+    <div>
+        <form action="addskilltopathway" method="post">
+        <input type="hidden" name="pathway_id" id="pathway_id" value="{{ pathway.id }}" />
+        <select name="skill_id" id="skill_id">
+        {% for item in skill_list %}
+        <option  value="{{ item.id }}">{{ item.title }}</option>
+        {% endfor %}
+        </select>
+        <input type="submit" value="Add Skill" />
+        </form>
+    </div>
+</body>
+</html>
